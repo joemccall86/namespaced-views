@@ -8,7 +8,13 @@ class ApplicationController implements PluginManagerAware {
     GrailsApplication grailsApplication
     GrailsPluginManager pluginManager
 
+    static namespace = 'foo'
+
     def index() {
-        [grailsApplication: grailsApplication, pluginManager: pluginManager]
+        respond([grailsApplication: grailsApplication, pluginManager: pluginManager], view: 'index')
+    }
+
+    def indexAbsolutePath() {
+        respond([grailsApplication: grailsApplication, pluginManager: pluginManager], view: '/absolute/index')
     }
 }
