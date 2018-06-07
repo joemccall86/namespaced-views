@@ -15,6 +15,10 @@ class ApplicationController implements PluginManagerAware {
     }
 
     def indexAbsolutePath() {
-        respond([grailsApplication: grailsApplication, pluginManager: pluginManager], view: '/absolute/index')
+        respond([grailsApplication: grailsApplication, pluginManager: pluginManager], view: '/absolute/path/index')
+    }
+
+    def indexAbsolutePathWithRender() {
+        render(model: [grailsApplication: grailsApplication, pluginManager: pluginManager], view: '/absolute/path/index')
     }
 }

@@ -34,4 +34,14 @@ class RestSpec extends Specification {
         then: 'the response contains the right parameter'
         response.json.fromAbsolutePath == true
     }
+
+    def 'view is rendered from absolute view path with render'() {
+        when: 'the other action is called'
+        def response = rest.get("${urlBase}/foo/application/indexAbsolutePathWithRender") {
+            accept 'application/json'
+        }
+
+        then: 'the response contains the right parameter'
+        response.json.fromAbsolutePath == true
+    }
 }
