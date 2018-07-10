@@ -14,11 +14,15 @@ class ApplicationController implements PluginManagerAware {
         respond([grailsApplication: grailsApplication, pluginManager: pluginManager], view: 'index')
     }
 
-    def indexAbsolutePath() {
-        respond([grailsApplication: grailsApplication, pluginManager: pluginManager], view: '/absolute/path/index')
+    def indexRespondNamespaceFallback() {
+        // The expected behavior is that this searches for index.gson first in
+        // the namespace path (e.g., views/foo/application/index.gson), and
+        // when it doesn't find it, look for views/application/index.gson).
+        respond(model: [grailsApplication: grailsApplication, pluginManager: pluginManager], view: 'index')
     }
 
-    def indexAbsolutePathWithRender() {
-        render(model: [grailsApplication: grailsApplication, pluginManager: pluginManager], view: '/absolute/path/index')
+    def indexRenderNamespaceFallback() {
+        // Behaves as expected.
+        render(model: [grailsApplication: grailsApplication, pluginManager: pluginManager], view: 'index')
     }
 }

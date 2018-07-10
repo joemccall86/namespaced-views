@@ -2,6 +2,7 @@ import grails.plugins.rest.client.RestBuilder
 import grails.testing.mixin.integration.Integration
 import spock.lang.Shared
 import spock.lang.Specification
+import spock.lang.Unroll
 
 @Integration
 class RestSpec extends Specification {
@@ -13,35 +14,17 @@ class RestSpec extends Specification {
         urlBase = "http://localhost:${serverPort}"
     }
 
-    def 'view is rendered from namespace convention'() {
-        when: 'the index action is called'
-        def response = rest.get("${urlBase}/foo/application/index") {
-            accept 'application/json'
-        }
-
-        then: 'the response contains the right parameter'
-        response.json.fromAbsolutePath == false
-
-
-    }
-
-    def 'view is rendered from absolute view path'() {
+    @Unroll
+    def 'view is rendered from outside the namespace path when the namespaced view does not exist - using #action'() {
         when: 'the other action is called'
-        def response = rest.get("${urlBase}/foo/application/indexAbsolutePath") {
+        def response = rest.get("${urlBase}/foo/application/${action}") {
             accept 'application/json'
         }
 
         then: 'the response contains the right parameter'
-        response.json.fromAbsolutePath == true
-    }
+        response.json.viewOutsideOfNamespacePath == true
 
-    def 'view is rendered from absolute view path with render'() {
-        when: 'the other action is called'
-        def response = rest.get("${urlBase}/foo/application/indexAbsolutePathWithRender") {
-            accept 'application/json'
-        }
-
-        then: 'the response contains the right parameter'
-        response.json.fromAbsolutePath == true
+        where:
+        action << ['indexRespondNamespaceFallback', 'indexRenderNamespaceFallback']
     }
 }

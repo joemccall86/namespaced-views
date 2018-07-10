@@ -30,5 +30,5 @@ json {
         name plugin.name
         version plugin.version
     }
-    fromAbsolutePath true
+    viewOutsideOfNamespacePath true
 }
